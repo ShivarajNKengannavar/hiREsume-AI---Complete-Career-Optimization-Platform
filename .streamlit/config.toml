@@ -1,0 +1,14 @@
+[theme]
+primaryColor="#00E0FF"
+backgroundColor="#070B17"  # Darker base for gradient effect
+secondaryBackgroundColor="#1a1f2e"  # Dark secondary background
+textColor="#E6E6E6"
+font="sans serif"
+
+# Additional theme properties to prevent console errors
+widgetBackgroundColor="#1a1f2e"
+widgetBorderColor="#2a3142"
+skeletonBackgroundColor="#2a3142"
+
+# Custom theme settings
+base="light"  # Light base allows custom background to show through

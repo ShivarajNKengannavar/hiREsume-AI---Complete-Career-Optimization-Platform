@@ -1,0 +1,852 @@
+/* ------------------------------------------------------------
+    "ASTONISHING" UI STYLESHEET V12 - FINAL COMPLETE FIXES (ULTIMATE VERSION)
+------------------------------------------------------------ */
+
+:root {
+    --primary-color: #00e0ff;
+    --primary-color-dark: #0088ff;
+    --primary-color-dim: rgba(0,136,255,0.12);
+    --accent-purple: #9900ff;
+    --two-tone-shadow: 0 0 10px rgba(0,224,255,0.45), 0 0 20px rgba(153,0,255,0.18);
+
+    /* Glassmorphism Colors */
+    --glass-bg: rgba(22,27,34,0.78);
+    --glass-bg-light: rgba(30,37,48,0.70);
+    --glass-border: rgba(255,255,255,0.08);
+    --glass-shadow: 0 10px 40px rgba(0,0,0,0.45);
+
+    /* Text Colors */
+    --text-color: #E6E6E6;
+    --text-color-secondary: #C0C7CC;
+    --secondary-background-color: #161b22; /* Primary dark input/container BG */
+
+    --border-color: #30363d;
+    --font: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+    /* Buttons / Brand gradient */
+    --brand-gradient: linear-gradient(135deg, var(--primary-color-dark), var(--primary-color));
+    --brand-flat: var(--primary-color-dark);
+    --brand-glow: 0 8px 30px rgba(0,224,255,0.18);
+
+    /* Utility / Component Tokens */
+    --space-xs: 6px;
+    --space-sm: 10px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --max-content-width: 1200px;
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 18px;
+    --elevation-1: 0 6px 18px rgba(0,0,0,0.28);
+    --elevation-2: 0 12px 34px rgba(0,0,0,0.36);
+    --accent-high-contrast: #00c2ff;
+    --focus-ring: rgba(0,224,255,0.22);
+    --lead-font-size: 1.05rem;
+    --muted-opacity: 0.82;
+}
+
+
+
+/* 1. AURORA ANIMATED BACKGROUND & GLOBAL TEXT LIFT */
+body {
+    font-family: var(--font);
+    color: var(--text-color);
+    text-shadow: 0 0 1px rgba(0,0,0,0.7), 0 0 0.5px var(--primary-color-dark);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+@keyframes aurora {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+@keyframes shimmer {
+    0% { background-position: -500% 0; }
+    100% { background-position: 500% 0; }
+}
+@keyframes sidebarShine {
+    0%,100% { border-color: var(--glass-border); box-shadow: 0 0 5px rgba(0,0,0,0.5); }
+    50% { border-color: rgba(153,0,255,0.08); box-shadow: 0 0 18px rgba(0,136,255,0.06); }
+}
+@keyframes alertPulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0,224,255,0.4); }
+    50% { transform: scale(1.01); box-shadow: 0 0 10px 3px rgba(153,0,255,0.4); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0,224,255,0.4); }
+}
+
+/* --- INTEGRATED HEADER GLASS MORPHISM FIX (Top Deploy Bar) --- */
+
+/* Targets the very top Streamlit Header Bar (Deploy button area) */
+[data-testid="stHeader"] {
+    background-color: rgba(18, 18, 18, 0.75) !important; 
+    backdrop-filter: blur(8px) saturate(150%);
+    -webkit-backdrop-filter: blur(8px) saturate(150%);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Fallback/Anti-Flash: Ensure the main body container is transparent so the Aurora background is visible */
+[data-testid="stAppViewBlock"] {
+    background-color: transparent !important;
+}
+
+/* App background with color-rich gradient overlay */
+.stApp {
+    background:
+        linear-gradient(135deg, rgba(153,0,255,0.06), rgba(255,102,178,0.04), rgba(0,224,255,0.06)),
+        linear-gradient(-45deg,#0d1117,#3a0088,#003366,#00e0ff);
+    background-size: 400% 400%, 400% 400% !important;
+    background-blend-mode: overlay, normal;
+    animation: aurora 18s ease infinite !important;
+    color: var(--text-color) !important;
+    min-height: 100vh;
+}
+
+/* Remove Streamlit default background block (Duplicate, but kept for safety) */
+[data-testid="stAppViewBlock"] { background-color: transparent !important; }
+
+/* 2. GLOBAL GLASSMORPHISM STYLES & CONTAINERS */
+
+/* Sidebar */
+[data-testid="stSidebar"] {
+    background:
+        linear-gradient(180deg, rgba(0,224,255,0.04), rgba(0,136,255,0.02)),
+        var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-right: 1px solid rgba(0,136,255,0.12);
+    box-shadow: 0 10px 40px rgba(0,136,255,0.06);
+    padding: 12px;
+}
+
+/* Lottie Component: make fully transparent so animations blend with app background */
+div[data-testid*="stLottie"] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    padding: 0; /* remove extra card padding so animation area sits flush */
+    background: transparent !important; /* enforce transparency */
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    transition: none !important;
+}
+
+/* Ensure Lottie inner wrappers and player elements are transparent */
+div[data-testid*="stLottie"] > div,
+div[data-testid*="stLottie"] .lf-player-container,
+div[data-testid*="stLottie"] .lottie-player,
+div[data-testid*="stLottie"] .animation-wrapper {
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+/* Force canvas/svg/path/g elements used by Lottie to be transparent */
+div[data-testid*="stLottie"] svg,
+div[data-testid*="stLottie"] canvas,
+div[data-testid*="stLottie"] path,
+div[data-testid*="stLottie"] g {
+    background: transparent !important;
+    fill: none !important;
+}
+
+/* More aggressive selectors to override inline styles coming from Lottie players */
+.lf-player-container, .lottie-player, .animation-wrapper, .lottie,
+div[class*="lottie"], div[class*="lf-player"], div[class*="animation"] {
+    background: transparent !important;
+}
+
+/* Ensure descendant nodes do not introduce a solid rectangle behind the animation */
+div[data-testid*="stLottie"] * {
+    background: transparent !important;
+}
+
+
+/* Main Content Containers (AOS-managed animations) */
+[data-testid="stVerticalBlock"] > [style*="border-radius: 0.5rem; border: 1px solid"],
+[data-testid="stForm"] {
+    background: var(--glass-bg-light);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.06) !important;
+    box-shadow: inset 1px 1px 3px rgba(255,255,255,0.03), var(--glass-shadow);
+    border-radius: 12px !important;
+    padding: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    opacity: 1; /* AOS controls entry animations */
+    animation-delay: 0.12s;
+}
+[data-testid="stVerticalBlock"] > [style*="border-radius: 0.5rem; border: 1px solid"]:hover,
+[data-testid="stForm"]:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 50px rgba(0,136,255,0.06), var(--two-tone-shadow);
+}
+
+/* Alerts */
+[data-testid="stAlert"] {
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0));
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(255,255,255,0.04) !important;
+    border-radius: 10px !important;
+    animation: fadeInUp 0.45s ease-out forwards, alertPulse 2s ease-in-out 0.6s 2;
+    opacity: 0;
+    animation-delay: 0.18s;
+    border-left-width: 5px !important;
+    border-left-style: solid !important;
+}
+[data-testid="stAlert"][data-baseweb="alert-info"] { border-left-color: var(--primary-color) !important; }
+[data-testid="stAlert"][data-baseweb="alert-error"] { border-left-color: #f85149 !important; }
+[data-testid="stAlert"][data-baseweb="alert-success"] { border-left-color: #3fb950 !important; }
+[data-testid="stAlert"][data-baseweb="alert-warning"] { border-left-color: #FACA15 !important; }
+
+
+/* 3. REFINED COMPONENTS & INTERACTION */
+
+/* --- HR CHATBOT INPUT FIX (The final, specific overrides) --- */
+
+/* Targets the element that holds the chat input and removes margin/padding */
+/* ...existing root variables and aurora animations... */
+
+/* Chat Container Fixes */
+/* Chat Container Fixes - Update the existing styles */
+[data-testid="stChatMessageContainer"] {
+    background: transparent !important;
+    margin: 0 auto 80px auto !important;  /* Center horizontally with auto margins */
+    padding: 20px !important;
+    max-width: 800px !important;  /* Set maximum width */
+    width: 90% !important;  /* Responsive width */
+    position: relative !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    z-index: 1;
+}
+
+/* Chat Message styling - Update existing styles */
+[data-testid="stChatMessage"] {
+    background: var(--glass-bg-light) !important;
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 12px !important;
+    margin: 0.5rem auto !important;  /* Center messages */
+    max-width: 100% !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+/* Chat Input Area */
+[data-testid="stChatInput"] {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 90% !important;
+    max-width: 1200px !important;
+    background: var(--glass-bg) !important;
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 12px !important;
+    margin: 20px auto !important;
+    padding: 15px !important;
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.2) !important;
+    z-index: 1000 !important;
+}
+
+[data-testid="stChatInput"] > div > div > textarea {
+    background-color: var(--secondary-background-color) !important;
+    color: var(--text-color) !important;
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 8px !important;
+}
+
+/* Download and Add Links Buttons */
+.stDownloadButton button,
+button[data-testid="baseButton-secondary"] {
+    background: linear-gradient(135deg, var(--glass-bg), var(--glass-bg-light)) !important;
+    color: #E6E6E6 !important;
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 8px !important;
+    padding: 8px 16px !important;
+    font-weight: 500 !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: all 0.2s ease !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.stDownloadButton button:hover,
+button[data-testid="baseButton-secondary"]:hover {
+    background: var(--glass-bg) !important;
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 0 15px rgba(0, 224, 255, 0.2) !important;
+    transform: translateY(-1px);
+}
+
+/* Message Content */
+[data-testid="stChatMessageContent"] {
+    background: var(--glass-bg-light) !important;
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 12px !important;
+    padding: 15px !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+/* Ensure text remains visible */
+[data-testid="stChatMessageContent"] * {
+    color: var(--text-color) !important;
+}
+
+/* Keep your existing styles below */
+/* ...existing code... */
+
+
+/* Expander contents */
+[data-testid="stExpanderContents"] {
+    background: var(--glass-bg-light) !important;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.04) !important;
+    border-radius: 0 0 12px 12px !important;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.28);
+    padding: 1.25rem !important;
+    margin-top: 0 !important;
+}
+div:not([data-testid="stSidebar"]) > [data-testid="stExpander"] {
+    border-radius: 12px !important;
+    border: none !important;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+div:not([data-testid="stSidebar"]) > [data-testid="stExpander"] summary {
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0));
+    border-radius: 12px !important;
+    padding: 0.8rem 1rem !important;
+    transition: all 0.25s ease;
+    border: 1px solid rgba(255,255,255,0.04);
+    box-shadow: var(--glass-shadow);
+    cursor: pointer;
+}
+div:not([data-testid="stSidebar"]) > [data-testid="stExpander"] summary:hover {
+    background-color: rgba(0,224,255,0.06) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(0,136,255,0.04);
+}
+div:not([data-testid="stSidebar"]) > [data-testid="stExpander"][aria-expanded="true"] summary {
+    border-radius: 12px 12px 0 0 !important;
+    border-bottom: 1px solid rgba(0,224,255,0.12) !important;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Global Button Styling */
+.stButton > button,
+button.stButton {
+    border: 1px solid rgba(0,224,255,0.18);
+    border-radius: 12px;
+    padding: 10px 20px;
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: #031014;
+    background: var(--brand-gradient);
+    box-shadow: var(--brand-glow), 0 6px 18px rgba(0,0,0,0.35);
+    transition: transform 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    -webkit-appearance: none;
+}
+
+/* Primary kind */
+.stButton > button[kind="primary"],
+[data-testid="stSidebar"] .stButton > button[kind="primary"] {
+    background: var(--brand-gradient);
+    color: #001521;
+    border-color: rgba(0,224,255,0.22);
+    box-shadow: 0 10px 30px rgba(0,224,255,0.12), 0 4px 8px rgba(0,0,0,0.28);
+}
+
+/* Secondary kind */
+/* This rule is overwritten by the more specific sidebar/general rules below to ensure visibility */
+.stButton > button[kind="secondary"] {
+    background: transparent;
+    color: var(--text-color);
+    border: 1px solid rgba(255,255,255,0.06);
+    box-shadow: none;
+}
+
+/* Hover & active */
+.stButton > button:hover,
+[data-testid="stSidebar"] .stButton > button:hover {
+    transform: translateY(-4px);
+    filter: brightness(1.03);
+    box-shadow: 0 20px 45px rgba(0,136,255,0.06), 0 8px 20px rgba(0,0,0,0.32);
+}
+.stButton > button:active,
+[data-testid="stSidebar"] .stButton > button:active {
+    transform: translateY(-1px) scale(0.995);
+    box-shadow: 0 8px 18px rgba(0,136,255,0.06) inset;
+}
+
+/* Button sheen */
+.stButton > button::before,
+[data-testid="stSidebar"] .stButton > button::before {
+    content: "";
+    position: absolute;
+    top: -40%;
+    left: -40%;
+    width: 180%;
+    height: 180%;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.18), rgba(255,255,255,0.02) 40%, transparent 60%);
+    opacity: 0;
+    transform: scale(0.6);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+    z-index: 0;
+}
+.stButton > button:hover::before,
+[data-testid="stSidebar"] .stButton > button:hover::before {
+    opacity: 1;
+    transform: scale(1);
+    top: -25%;
+    left: -25%;
+}
+
+/* Button trail */
+.stButton > button::after {
+    content: "";
+    position: absolute;
+    bottom: 10%;
+    left: 6%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.0), rgba(255,255,255,0.6), rgba(255,255,255,0.0));
+    transition: width 0.45s ease, left 0.45s ease, opacity 0.45s ease;
+    z-index: 2;
+}
+.stButton > button:hover::after { width: 70%; left: 15%; opacity: 1; }
+.stButton > button:not(:hover)::after { opacity: 0; }
+
+.stButton > button:focus { outline: 2px solid rgba(0,224,255,0.18); outline-offset: 2px; }
+
+/* Inputs */
+.stTextInput input, .stTextArea textarea, .stSelectbox div[data-baseweb="select"] > div,
+.stDateInput input, .stTimeInput input {
+    background-color: var(--secondary-background-color) !important;
+    color: var(--text-color) !important;
+    border: 1px solid rgba(255,255,255,0.04) !important;
+    border-radius: 8px !important;
+    transition: border-color 0.22s ease, box-shadow 0.22s ease !important;
+    padding: 10px !important;
+}
+.stTextInput input:focus, .stTextArea textarea:focus, .stSelectbox div[data-baseweb="select"] > div:focus-within,
+.stDateInput input:focus, .stTimeInput input:focus {
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 6px 32px rgba(0,136,255,0.08), 0 0 8px rgba(0,224,255,0.06) !important;
+    filter: drop-shadow(0 0 2px var(--primary-color));
+    background-image: repeating-linear-gradient(45deg, rgba(0,224,255,0.03) 0px, rgba(153,0,255,0.02) 1px, transparent 1px, transparent 8px) !important;
+    animation: shimmer 6s infinite linear;
+}
+
+/* Placeholders */
+.stTextInput input::placeholder,
+.stTextArea textarea::placeholder,
+.stSelectbox input::placeholder,
+input::placeholder,
+textarea::placeholder { color: rgba(230,230,230,0.95) !important; opacity: 1 !important; }
+
+/* Autofill */
+input:-webkit-autofill,
+textarea:-webkit-autofill { -webkit-text-fill-color: var(--text-color) !important; box-shadow: 0 0 0px 1000px var(--secondary-background-color) inset !important; }
+
+/* Dropdowns */
+select, option, datalist option,
+.stSelectbox [role="option"], .stSelectbox [role="listbox"] { color: var(--text-color) !important; background-color: var(--secondary-background-color) !important; }
+
+/* Captions */
+div[data-testid="stCaptionContainer"],
+.stTextInput label, .stTextInput small,
+.stFileUploader small, .stMarkdownContainer small {
+    color: var(--text-color-secondary) !important;
+    opacity: 0.98 !important;
+}
+
+/* Tabs */
+.stTabs [data-baseweb="tab"][aria-selected="true"] {
+    background-color: rgba(0,224,255,0.06);
+    color: var(--primary-color);
+    font-weight: 700;
+    text-shadow: 0 0 4px rgba(0,224,255,0.12);
+    border-bottom: 2px solid rgba(0,224,255,0.12) !important;
+}
+
+/* Sidebar expander styling (clean, consistent) */
+[data-testid="stSidebar"] [data-testid="stExpander"] summary {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.02);
+    border-radius: 8px !important;
+    margin-bottom: 6px;
+    animation: sidebarShine 5s infinite alternate ease-in-out;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+    color: var(--text-color);
+    padding: 10px 12px;
+    display: block;
+    cursor: pointer;
+}
+[data-testid="stSidebar"] [data-testid="stExpander"][aria-expanded="true"] summary {
+    animation: none;
+    border-color: rgba(0,224,255,0.12);
+    background: linear-gradient(90deg, rgba(0,224,255,0.04), rgba(153,0,255,0.02));
+    box-shadow: 0 8px 24px rgba(0,224,255,0.06);
+}
+
+/* Hover/focus/active for sidebar items */
+[data-testid="stSidebar"] [data-testid="stExpander"] summary:hover,
+[data-testid="stSidebar"] [data-testid="stExpander"] summary:focus {
+    /* STICK TO STATIC HEADER LOOK */
+    transform: none !important; 
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.04), rgba(0, 136, 255, 0.03)) !important;
+    box-shadow: none !important;
+    border-color: rgba(0,224,255,0.12) !important;
+    color: var(--text-color);
+    outline: none;
+}
+[data-testid="stSidebar"] [data-testid="stExpander"] summary:active {
+    transform: translateY(-1px) scale(0.995);
+    box-shadow: 0 6px 18px rgba(0,136,255,0.05) inset;
+}
+
+/* Keep inner elements clickable — do not disable pointer events */
+[data-testid="stSidebar"] [data-testid="stExpander"] summary > * { cursor: inherit; pointer-events: auto; }
+
+/* ------------------------------------------- */
+/* --- CUSTOM SIDEBAR HIERARCHY & ALIGNMENT --- */
+/* ------------------------------------------- */
+
+/* Center buttons and navigation elements in the sidebar */
+[data-testid="stSidebarContent"] .stButton > button {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center; 
+}
+
+/* Ensure the expander titles are clean and centered */
+[data-testid="stSidebarContent"] h3, 
+[data-testid="stSidebarContent"] h4 {
+    text-align: center; 
+}
+
+/* Sidebar buttons consistent highlight (OVERRIDING OLD RULES) */
+[data-testid="stSidebar"] .stButton > button { 
+    display:block; 
+    width:90%; 
+    margin: 8px auto !important; 
+    text-align:center !important; 
+    padding:0.6rem 0.9rem !important; 
+    border-radius:10px !important; 
+    font-size: 0.95rem !important;
+    /* Ensure the button hovers dynamically */
+    transition: transform 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease !important;
+}
+
+/* Applying Dynamic Hover to Sidebar Buttons */
+[data-testid="stSidebar"] .stButton > button:hover {
+    /* Restored Hover Dynamics */
+    transform: translateY(-2px) !important; 
+    filter: brightness(1.03);
+    box-shadow: 0 14px 34px rgba(0,224,255,0.09) !important; /* Enforce shadow/glow */
+    /* Ensure secondary button looks right on hover */
+    background: transparent !important;
+    border-color: rgba(0,224,255,0.18) !important;
+}
+[data-testid="stSidebar"] .stButton > button[kind="primary"]:hover {
+     background: var(--brand-gradient) !important;
+}
+
+/* Secondary button FIX: Ensure text remains visible and background is dark glass */
+[data-testid="stSidebar"] .stButton > button[kind="secondary"] {
+    /* Set dark glass background */
+    background: var(--glass-bg-light) !important;
+    /* Ensure text is light */
+    color: var(--text-color) !important; 
+    border: 1px solid rgba(255,255,255,0.06) !important;
+}
+[data-testid="stSidebar"] .stButton > button[kind="primary"] {
+    color: #001521 !important;
+    border-color: rgba(0,224,255,0.18) !important;
+    background: var(--brand-gradient) !important;
+}
+
+/* Ensure the button text remains centered */
+[data-testid="stSidebarContent"] .stButton > button span {
+    width: 100%;
+}
+
+
+/* App Title/Headers */
+h1[data-testid="stTitle"] {
+    color: var(--primary-color);
+    text-align: center;
+    font-size: 2.4rem;
+    font-weight: 700;
+    background: linear-gradient(45deg, var(--primary-color), #ffffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    padding-bottom: 12px;
+    position: relative;
+    animation: fadeInDown 0.7s ease-out;
+}
+h1[data-testid="stTitle"]::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--primary-color-dark));
+    bottom: 0; left: 50%; transform: translateX(-50%);
+    border-radius: 2px;
+    animation: expandWidth 0.9s ease-out 0.2s forwards;
+}
+h2[data-testid="stHeading"] { color: var(--primary-color); text-align:center; margin:1rem 0; animation: fadeInUp 0.6s ease-out forwards; opacity:0; animation-delay:0.08s; }
+h3 { color:#FFFFFF; border-bottom:1px solid rgba(255,255,255,0.04); padding-bottom:8px; margin:2rem 0 1rem; font-weight:600; animation:fadeInUp 0.6s ease-out forwards; opacity:0; animation-delay:0.12s; }
+
+/* Tabs container and styling */
+.stTabs { animation: fadeInUp 0.75s ease-out forwards; opacity:0; animation-delay:0.14s; }
+.stTabs [data-baseweb="tab-list"] {
+    gap:12px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0));
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    border:1px solid rgba(255,255,255,0.03); border-radius:10px; padding:8px; flex-wrap:wrap; margin-bottom:20px;
+}
+.stTabs [data-baseweb="tab"] {
+    height:46px; white-space:pre-wrap; background-color:transparent; color:var(--text-color-secondary);
+    border:none; border-radius:8px; transition:all 0.22s ease; padding:0 14px; position:relative;
+}
+.stTabs [data-baseweb="tab"]::after { content:""; position:absolute; bottom:0; left:50%; width:0; height:2px; background:var(--primary-color); transition:all 0.22s ease; transform:translateX(-50%); }
+.stTabs [data-baseweb="tab"]:hover { color:var(--primary-color); }
+.stTabs [data-baseweb="tab"]:hover::after { width:72%; }
+.stTabs [data-baseweb="tab"][aria-selected="true"]::after { display:none; }
+
+/* Text / Dataframe colors */
+body, .stApp, .stApp p, .stApp li, .stMarkdownContainer, div[data-testid="stText"], span { color:var(--text-color) !important; line-height:1.6; }
+label, .stFileUploader label, .stRadio label span, .stDateInput label, .stTimeInput label, .stSelectbox label { color:var(--text-color) !important; }
+.stMarkdownContainer p, .stMarkdownContainer li, div[data-testid="stText"], span:not([class*="css-"]) { color:var(--text-color-secondary) !important; }
+strong, b { color:var(--text-color) !important; }
+.stDataFrame, .stTable { color:var(--text-color) !important; }
+.stDataFrame table td, .stDataFrame table th, .stTable table td, .stTable table th { color:var(--text-color-secondary) !important; border-color: rgba(255,255,255,0.03) !important; }
+.stDataFrame table th, .stTable table th { color:var(--text-color) !important; }
+
+/* Dividers */
+hr { background: linear-gradient(90deg, transparent, var(--primary-color-dark), transparent); border:none; height:1px; margin:2rem 0 !important; box-shadow:0 0 5px rgba(0,224,255,0.12); animation:expandWidthHorizontal 0.8s ease-out 0.28s forwards; width:0%; opacity:0; }
+
+/* Design utilities appended earlier (cards, skeletons, toasts, etc.) */
+/* Card component */
+.card { background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.04); border-radius:var(--radius-md); padding:var(--space-md); box-shadow:var(--elevation-1); transition:transform 0.18s ease, box-shadow 0.18s ease; }
+.card:hover { transform:translateY(-6px); box-shadow:var(--elevation-2); }
+.card-accent { position:relative; overflow:hidden; }
+.card-accent::before { content:""; position:absolute; inset:-2px; background: linear-gradient(120deg, rgba(0,224,255,0.06), rgba(153,0,255,0.04)); z-index:-1; filter:blur(8px); border-radius:calc(var(--radius-md) + 2px); opacity:0.95; }
+
+/* Skeleton */
+.skeleton { background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.04), rgba(255,255,255,0.02)); border-radius:6px; min-height:12px; display:inline-block; position:relative; overflow:hidden; }
+@keyframes skeleton-shimmer { 0% { transform: translateX(-120%); } 100% { transform: translateX(120%); } }
+.skeleton::after { content:""; position:absolute; top:0; left:0; bottom:0; width:40%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent); animation:skeleton-shimmer 1.2s ease-in-out infinite; }
+
+/* Sticky actions footer */
+.sticky-actions { position:sticky; bottom:10px; display:flex; gap:var(--space-sm); justify-content:center; align-items:center; padding:var(--space-sm); background: linear-gradient(180deg, rgba(22,27,34,0.75), rgba(22,27,34,0.65)); border-radius:999px; margin:var(--space-md) auto 0; max-width:calc(var(--max-content-width) - var(--space-lg)); box-shadow:0 8px 30px rgba(0,0,0,0.4); }
+
+/* Input group floating label */
+.input-group { position:relative; display:inline-block; width:100%; }
+.input-group input, .input-group textarea, .input-group select { width:100%; padding:14px 12px 12px 12px; border-radius:var(--radius-sm); box-sizing:border-box; }
+.input-group label { position:absolute; top:12px; left:12px; font-size:0.9rem; color:rgba(230,230,230,0.8); transition:transform 0.15s ease, font-size 0.15s ease, top 0.15s ease; pointer-events:none; transform-origin:left top; }
+.input-group input:focus + label, .input-group input:not(:placeholder-shown) + label, .input-group textarea:focus + label, .input-group textarea:not(:placeholder-shown) + label { top:6px; transform:scale(0.86); font-size:0.78rem; color:var(--primary-color); }
+
+/* Validation */
+.input-valid { border-color:#3fb950 !important; box-shadow: 0 6px 22px rgba(63,185,80,0.06); }
+.input-invalid { border-color:#f85149 !important; box-shadow: 0 6px 22px rgba(248,81,73,0.06); }
+
+/* Toast */
+.toast { position:fixed; right:var(--space-md); bottom:var(--space-md); padding:12px 16px; background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02)); color:var(--text-color); border:1px solid rgba(255,255,255,0.04); border-radius:10px; box-shadow:0 10px 40px rgba(0,0,0,0.45); z-index:9999; transform-origin:right bottom; animation:toastIn 280ms cubic-bezier(.2,.9,.2,1); }
+@keyframes toastIn { from { transform: translateY(10px) scale(.98); opacity:0 } to { transform: translateY(0) scale(1); opacity:1 } }
+.toast.success { border-left:4px solid #3fb950; } .toast.error { border-left:4px solid #f85149; } .toast.info { border-left:4px solid var(--primary-color); }
+
+/* Tooltip */
+.tooltip { position:relative; display:inline-block; }
+.tooltip:hover::after, .tooltip:focus::after { content: attr(data-tooltip); position:absolute; bottom: calc(100% + 8px); left:50%; transform:translateX(-50%); background: rgba(12,15,17,0.86); color:var(--text-color); padding:6px 8px; border-radius:6px; font-size:0.82rem; white-space:nowrap; box-shadow:0 6px 18px rgba(0,0,0,0.5); z-index:999; opacity:1; }
+
+/* Chips / badges / kbd */
+.chip { display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.03); color:var(--text-color-secondary); font-weight:600; font-size:0.86rem; }
+.badge { display:inline-block; padding:4px 8px; border-radius:999px; background:var(--primary-color-dark); color:#001521; font-weight:700; font-size:0.75rem; }
+kbd { background: rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.04); padding:4px 6px; border-radius:6px; font-weight:700; font-size:0.78rem; }
+
+/* Scrollbars */
+::-webkit-scrollbar { height:12px; width:12px; }
+::-webkit-scrollbar-thumb { background: linear-gradient(180deg, rgba(0,224,255,0.12), rgba(153,0,255,0.12)); border-radius:12px; border:3px solid rgba(0,0,0,0.12); }
+::-webkit-scrollbar-track { background: transparent; }
+* { scrollbar-width: thin; scrollbar-color: rgba(0,224,255,0.12) transparent; }
+
+/* Select Dropdown Styling */
+.stSelectbox {
+    margin: 8px 0 !important;
+}
+
+.stSelectbox select,
+.stSelectbox div[data-baseweb="select"] > div {
+    color: #FFFFFF !important;
+    background-color: #1E1E1E !important;
+    border: 1px solid #444 !important;
+    border-radius: 6px !important;
+    padding: 12px 16px !important;
+    font-weight: 500 !important;
+    box-shadow: none !important;
+    min-height: 44px !important;
+    display: flex !important;
+    align-items: center !important;
+    line-height: 1.4 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* Selected value styling */
+.stSelectbox div[data-baseweb="select"] > div > div {
+    padding: 0 !important;
+    margin: 0 !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+}
+
+/* Dropdown arrow */
+/* Keep our custom dropdown arrow */
+/* Remove all dropdown arrows */
+.stSelectbox div[data-baseweb="select"] > div::after,
+.stSelectbox div[data-baseweb="select"] svg {
+    display: none !important;
+}
+
+/* Fix cursor position in dropdowns */
+.stSelectbox input,
+.stSelectbox select {
+    cursor: pointer !important;
+    caret-color: transparent !important;
+}
+
+/* Add custom dropdown icon */
+.stSelectbox div[data-baseweb="select"]::after {
+    content: "▼";
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #E6E6E6;
+    font-size: 10px;
+    pointer-events: none;
+}
+
+/* Ensure text doesn't go under the icon */
+.stSelectbox div[data-baseweb="select"] > div > div {
+    padding-right: 24px !important;
+}
+
+/* Remove default dropdown arrow */
+.stSelectbox svg {
+    display: none !important;
+}
+
+/* Remove default browser arrow */
+select {
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    background-image: none !important;
+    padding-right: 16px !important;
+}
+
+/* Ensure the container has relative positioning */
+.stSelectbox div[data-baseweb="select"] {
+    position: relative;
+}
+
+/* Dropdown options */
+.stSelectbox div[data-baseweb="select"] > div > div > div {
+    color: #FFFFFF !important;
+    background-color: #1E1E1E !important;
+    padding: 12px 16px !important;
+    margin: 0 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    display: block !important;
+    width: 100% !important;
+    text-align: left !important;
+    border-radius: 0 !important;
+}
+
+/* Hover state for options */
+.stSelectbox div[data-baseweb="select"] > div > div > div:hover {
+    background-color: #2A2A2A !important;
+}
+
+/* Hover state for options */
+select option:hover,
+select option:focus,
+select option:active,
+select option:checked {
+    background: linear-gradient(135deg, #1a4b8c, #0e2a4a) !important;
+    color: #ffffff !important;
+}
+
+/* Fix for the dropdown arrow color */
+/* Base select element styling */
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: none !important;
+    padding-right: 40px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    position: relative;
+}
+
+/* Focus state */
+.stSelectbox div[data-baseweb="select"] > div:focus,
+.stSelectbox div[data-baseweb="select"] > div[aria-expanded="true"] {
+    border-color: #00B0FF !important;
+    box-shadow: 0 0 0 2px rgba(0, 176, 255, 0.2) !important;
+    outline: none !important;
+}
+
+/* Responsive tweaks */
+@media (max-width:720px) {
+    h1[data-testid="stTitle"] { font-size:1.6rem; margin-bottom:8px; }
+    .card { padding:var(--space-sm); border-radius:10px; }
+    .sticky-actions { bottom:6px; left:6px; right:6px; border-radius:12px; }
+    .sticky-actions { bottom:6px; left:6px; right:6px; border-radius:12px; }
+}
+
+/* High-contrast mode */
+body.high-contrast { --primary-color: var(--accent-high-contrast); --primary-color-dark:#008db3; background-blend-mode:multiply; }
+body.high-contrast .stButton > button { border-color: rgba(0,200,255,0.28) !important; box-shadow:0 10px 30px rgba(0,200,255,0.12) !important; }
+
+/* Performance / accessibility */
+.stApp, .stTabs, .stDataFrame, .card { transform-style: preserve-3d; backface-visibility: hidden; }
+@media (prefers-reduced-motion: reduce) { * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; } }
+:focus { outline: none; }
+:focus-visible, a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible { box-shadow: 0 0 0 4px var(--focus-ring); }
+
+/* Animation keyframes */
+@keyframes fadeInDown { 0% { opacity:0; transform:translateY(-20px); } 100% { opacity:1; transform:translateY(0); } }
+@keyframes fadeInUp { 0% { opacity:0; transform:translateY(20px); } 100% { opacity:1; transform:translateY(0); } }
+@keyframes expandWidth { 0% { width:0; } 100% { width:200px; } }
+@keyframes pulse { 0% { box-shadow:0 0 0 0 rgba(0,224,255,0.7); } 70% { box-shadow:0 0 0 10px rgba(153,0,255,0.18); } 100% { box-shadow:0 0 0 0 rgba(0,224,255,0); } }
+@keyframes activeGradientShift { 0% { background-position:0% 50%; } 50% { background-position:100% 50%; } 100% { background-position:0% 50%; } }
+@keyframes expandWidthHorizontal { from { width:0%; opacity:0; } to { width:100%; opacity:1; } }
+@keyframes trailMove { 0% { left:0%; width:0%; opacity:0.8; } 50% { left:20%; width:60%; opacity:0.9; } 100% { left:80%; width:0%; opacity:0.8; } }

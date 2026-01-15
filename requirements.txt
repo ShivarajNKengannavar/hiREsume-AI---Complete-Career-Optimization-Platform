@@ -1,0 +1,11 @@
+streamlit
+PyPDF2==3.0.1
+google.generativeai
+python-dotenv
+streamlit_extras
+python-docx
+pdf2image
+pytesseract
+Pillow
+pandas
+streamlit-lottie
