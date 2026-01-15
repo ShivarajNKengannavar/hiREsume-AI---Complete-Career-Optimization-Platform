@@ -105,7 +105,7 @@ hiREsume/
 └── README.md             # This file
 ```
 
-## 🎯 Usage Guide
+## 🎯 Usage Guide - https://hiresume.streamlit.app/
 
 ### 1. Resume Optimization
 
