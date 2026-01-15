@@ -32,9 +32,6 @@ An AI-powered resume optimization and job search platform that helps you create 
 - **Market Trends**: Stay updated with industry demands
 
 ## 🎨 User Interface
-
-![Application Navigation](assets/images/Navbar.png)
-
 Our intuitive interface features:
 - **Clean Navigation**: Easy access to all major features
 - **Responsive Design**: Works seamlessly on desktop and mobile
@@ -111,7 +108,6 @@ hiREsume/
 ## 🎯 Usage Guide
 
 ### 1. Resume Optimization
-![Resume Creation Interface](assets/screenshots/Resume.png)
 
 1. **Upload Your Resume**: 
    - Supported formats: PDF, DOCX, PNG, JPG
