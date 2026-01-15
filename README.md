@@ -125,7 +125,6 @@ hiREsume/
    - Download optimized PDF resume
 
 ### 2. Job Search
-![Job Search Interface](assets/screenshots/Navbar.png)
 
 1. **Search Configuration**:
    - Enter job titles and keywords
@@ -197,14 +196,6 @@ The application uses SQLite with the following main tables:
 - `resume_analytics`: Resume performance data
 - `job_searches`: Search history and results
 - `user_profiles`: User information and preferences
-
-## 🎬 Demo & Screenshots
-
-### Application Overview
-![Main Application Interface](assets/images/Navbar.png)
-
-### Resume Creation Workflow
-![Resume Creation Process](assets/screenshots/Resume.png)
 
 ### Key Features in Action
 - **Smart Resume Analysis**: AI-powered content optimization
